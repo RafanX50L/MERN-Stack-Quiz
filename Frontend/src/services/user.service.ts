@@ -1,0 +1,88 @@
+// src/services/userDashboard.service.ts
+import { toast } from 'sonner'
+import api from './api'
+import { USER_ROUTES } from '@/constants/routes'
+import type { QuizDetail, SubmitResult } from '@/types/quiz'
+import type { PaginatedQuizzes } from './admin.service'
+
+export type UserDashboardData = {
+  stats: {
+    totalQuizzes: number
+    avgScore: number
+    bestScore: number
+  }
+  recentResults: Array<{
+    quizId: string
+    title: string
+    category: string
+    score: number
+    date: string
+  }>
+  charts: {
+    attemptsOverTime: Array<{ date: string; attempts: number }>
+    scoreDistribution: Array<{ range: string; count: number }>
+    categoryPerformance: Array<{ category: string; attempts: number; avgScore: number }>
+  }
+}
+
+export const UserService = {
+  getDashboard: async (userId: string): Promise<UserDashboardData | null> => {
+    try {
+      const res = await api.get<UserDashboardData>(USER_ROUTES.DASHBOARD(userId))
+      return res.data.data
+    } catch (error: any) {
+      const msg = error.response?.data?.error || 'Failed to load dashboard'
+      toast.error(msg)
+      return null
+    }
+  },
+  userQuizService: {
+    getAll: async (filters?: {
+      category?: string
+      difficulty?: string
+      search?: string
+      page?: number
+      limit?: number
+    }): Promise<PaginatedQuizzes | null> => {
+      try {
+        const params = new URLSearchParams()
+        if (filters?.category) params.append('category', filters.category)
+        if (filters?.difficulty) params.append('difficulty', filters.difficulty)
+        if (filters?.search) params.append('search', filters.search)
+        if (filters?.page) params.append('page', filters.page.toString())
+        if (filters?.limit) params.append('limit', filters.limit.toString())
+
+        const res = await api.get<PaginatedQuizzes>(`${USER_ROUTES.USER_QUIZ_ROUTES.GET_ALL}?${params}`)
+        return res.data.data
+      } catch (error) {
+        toast.error('Failed to load quizzes')
+        return null
+      }
+    },
+
+    getById: async (id: string): Promise<QuizDetail | null> => {
+      try {
+        const res = await api.get<QuizDetail>(USER_ROUTES.USER_QUIZ_ROUTES.GET_BY_ID(id))
+        return res.data.data
+      } catch (error: any) {
+        toast.error('Quiz not found')
+        return null
+      }
+    },
+
+    submit: async (data: {
+      quizId: string
+      userId: string
+      answers: number[]
+      timeTaken: number
+    }): Promise<SubmitResult | null> => {
+      try {
+        const res = await api.post<SubmitResult>(USER_ROUTES.USER_QUIZ_ROUTES.SUBMIT, data)
+        return res.data.data
+      } catch (error: any) {
+        toast.error('Failed to submit quiz')
+        return null
+      }
+    }
+  }
+}
