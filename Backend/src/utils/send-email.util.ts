@@ -38,7 +38,7 @@ export const sendPasswordResetEmail = async (email: string, token: string) => {
         <p>Click the link below to reset your password:</p>
         <a href="${resetLink}">${resetLink}</a><br/>
         <p>If you did not request this, ignore this email.</p>
-        <p>~ Tahtib ALJuhd</p>
+        <p>~ Quiz Master Pro</p>
       `,
     });
     logger.info(`✅ Password reset email sent successfully to ${email}`);
