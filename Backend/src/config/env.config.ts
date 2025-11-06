@@ -20,6 +20,9 @@ export const env = {
   get SENDER_EMAIL() {
     return process.env.SENDER_EMAIL;
   },
+  get RESEND_API_KEY() {
+    return process.env.RESEND_API_KEY;
+  },
   get PASSKEY() {
     return process.env.PASSKEY;
   },
