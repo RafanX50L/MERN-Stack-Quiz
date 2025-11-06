@@ -1,4 +1,3 @@
-```markdown
 # 🎯 MERN-Stack-Quiz
 
 A MERN (MongoDB, Express.js, React.js, Node.js) stack-based quiz application that allows users to take quizzes, view their scores, and track their performance.  
@@ -19,6 +18,12 @@ The project demonstrates **clean architecture**, **reusable services**, and **mo
 
 ---
 
+## 🚀 Live Demo
+
+🌐 **Try it now**: [https://quiz.rafan.tech/](https://quiz.rafan.tech/)
+
+> Hosted on Vercel (Frontend) + Render/Cyclic (Backend) — fully functional and responsive!
+
 ---
 
 ## 🚀 Local Setup Instructions
@@ -28,7 +33,6 @@ The project demonstrates **clean architecture**, **reusable services**, and **mo
 ```bash
 git clone https://github.com/RafanX50L/MERN-Stack-Quiz.git
 cd MERN-Stack-Quiz
-```
 
 ### 2. Initialize the project (PowerShell)
 
