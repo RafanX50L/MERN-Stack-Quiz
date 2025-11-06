@@ -44,7 +44,7 @@ export const secureTokenStorage = {
 
 
 const api: AxiosInstance = axios.create({
-  baseURL: `${'http://localhost:3000'}/api`,
+  baseURL: `${HOST}/api`,
   withCredentials: true,
   timeout: 10000,
   headers: {
