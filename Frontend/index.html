@@ -12,10 +12,10 @@
 
     <!-- Open Graph / Facebook -->
     <meta property="og:type" content="website" />
-    <meta property="og:url" content="https://quizmaster.pro" />
+    <meta property="og:url" content="https://quiz.rafan.tech" />
     <meta property="og:title" content="QuizMaster Pro - Master Coding with Interactive Quizzes" />
     <meta property="og:description" content="Practice 1000+ real-world coding quizzes. Get instant feedback, track progress, and level up 3x faster. Free to start!" />
-    <meta property="og:image" content="https://quizmaster.pro/og-image.jpg" />
+    <meta property="og:image" content="https://quiz.rafan.tech/logo.png" />
     <meta property="og:image:width" content="1200" />
     <meta property="og:image:height" content="630" />
     <meta property="og:image:alt" content="QuizMaster Pro - Interactive coding quiz platform with leaderboards and progress tracking" />
@@ -24,27 +24,49 @@
 
     <!-- Twitter -->
     <meta name="twitter:card" content="summary_large_image" />
-    <meta name="twitter:url" content="https://quizmaster.pro" />
+    <meta name="twitter:url" content="https://quiz.rafan.tech" />
     <meta name="twitter:title" content="QuizMaster Pro - Master Coding with Interactive Quizzes" />
     <meta name="twitter:description" content="Practice 1000+ real-world coding quizzes. Get instant feedback, track progress, and level up 3x faster. Free to start!" />
-    <meta name="twitter:image" content="https://quizmaster.pro/og-image.jpg" />
+    <meta name="twitter:image" content="https://quiz.rafan.tech/logo.png" />
     <meta name="twitter:image:alt" content="QuizMaster Pro - Interactive coding quiz platform" />
     <meta name="twitter:site" content="@quizmasterpro" />
     <meta name="twitter:creator" content="@quizmasterpro" />
 
-    <!-- Additional -->
+    <!-- SEO & PWA -->
     <meta name="theme-color" content="#6366f1" />
     <meta name="robots" content="index, follow" />
-    <link rel="canonical" href="https://quizmaster.pro" />
+    <link rel="canonical" href="https://quiz.rafan.tech" />
+    <meta name="apple-mobile-web-app-capable" content="yes" />
+    <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent" />
 
     <!-- Favicon -->
     <link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png" />
     <link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png" />
     <link rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16.png" />
     <link rel="manifest" href="/site.webmanifest" />
+
+    <!-- Structured Data -->
+    <script type="application/ld+json">
+      {
+        "@context": "https://schema.org",
+        "@type": "WebApplication",
+        "name": "QuizMaster Pro",
+        "url": "https://quiz.rafan.tech",
+        "description": "Practice 1000+ real-world coding quizzes and level up 3x faster.",
+        "applicationCategory": "EducationalApplication",
+        "operatingSystem": "All",
+        "creator": {
+          "@type": "Organization",
+          "name": "Rafan Tech"
+        }
+      }
+    </script>
   </head>
   <body>
+    <noscript>
+      <strong>We're sorry, but QuizMaster Pro requires JavaScript to run properly.</strong>
+    </noscript>
     <div id="root"></div>
-    <script type="module" src="/src/main.tsx"></script>
+    <script type="module" src="/src/main.tsx" defer></script>
   </body>
 </html>
