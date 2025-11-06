@@ -46,4 +46,3 @@ export const sendPasswordResetEmail = async (email: string, token: string) => {
     throw new Error("Error sending password reset email");
   }
 };
-
