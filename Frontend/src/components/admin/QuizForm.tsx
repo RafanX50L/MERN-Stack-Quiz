@@ -33,10 +33,18 @@ export default function QuizForm({ open, onClose, onSubmit, initialData }: Props
   ])
 
   useEffect(() => {
-    if (initialData?.questions?.length) {
-      setQuestions(initialData.questions)
+    if (initialData) {
+      setTitle(initialData.title || '')
+      setDescription(initialData.description || '')
+      setCategory(initialData.category || '')
+      setDifficulty(initialData.difficulty || 'Beginner')
+      setTimeLimit(initialData.timeLimit || 300)
+      if (initialData.questions?.length) {
+        setQuestions(initialData.questions)
+      }
     }
   }, [initialData])
+
 
 
   const handleAddQuestion = () => {
