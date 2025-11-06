@@ -35,7 +35,7 @@ export type Quiz = {
 }
 
 export type PaginatedQuizzes = {
-  quizzes: QuizSummary[]
+  quizzes: Quiz[]
   pagination: { page: number; limit: number; total: number }
 }
 export type PaginatedUsers = {

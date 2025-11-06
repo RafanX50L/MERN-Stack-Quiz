@@ -1,7 +1,7 @@
 // src/components/admin/QuizForm.tsx
 'use client'
 
-import { useState } from 'react'
+import { useEffect, useState } from 'react'
 import { Button } from '@/components/ui/button'
 import { Input } from '@/components/ui/input'
 import { Label } from '@/components/ui/label'
@@ -29,8 +29,10 @@ export default function QuizForm({ open, onClose, onSubmit, initialData }: Props
   const [difficulty, setDifficulty] = useState(initialData?.difficulty || 'Beginner')
   const [timeLimit, setTimeLimit] = useState(initialData?.timeLimit || 300)
   const [questions, setQuestions] = useState<Question[]>(
-    initialData?.questions || [{ question: '', options: ['', '', '', ''], correctAnswer: 0 }]
+    (initialData?.questions) || [{ question: '', options: ['', '', '', ''], correctAnswer: 0 }]
   )
+
+  useEffect(()=>console.log(initialData,questions))
 
   const handleAddQuestion = () => {
     setQuestions([...questions, { question: '', options: ['', '', '', ''], correctAnswer: 0 }])
