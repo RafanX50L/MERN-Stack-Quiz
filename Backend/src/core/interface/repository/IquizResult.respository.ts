@@ -1,4 +1,4 @@
-import { IQuizResult } from "@/models/QuizResult.model";
+import { IQuizResult } from "@/models/quizResult.model";
 import { FilterQuery } from "mongoose";
 import { IBaseRepository } from "./IBase.repository";
 

@@ -1,6 +1,6 @@
 import { Model } from "mongoose";
 import { BaseRepository } from "./base.repository";
-import QuizResultModel, { IQuizResult } from "@/models/QuizResult.model";
+import QuizResultModel, { IQuizResult } from "@/models/quizResult.model";
 import { IQuizResultRepository } from "@/core/interface/repository/IquizResult.respository";
 
 export class QuizResultRepository
