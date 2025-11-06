@@ -1,0 +1,55 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg width="512" height="512" viewBox="0 0 512 512" fill="none" xmlns="http://www.w3.org/2000/svg">
+  <!-- Background Gradient -->
+  <defs>
+    <linearGradient id="bgGradient" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#1e1b4b"/>
+      <stop offset="50%" stop-color="#4c1d95"/>
+      <stop offset="100%" stop-color="#ec4899"/>
+    </linearGradient>
+    <radialGradient id="glow" cx="50%" cy="40%" r="60%">
+      <stop offset="0%" stop-color="#c084fc" stop-opacity="0.6"/>
+      <stop offset="100%" stop-color="#ec4899" stop-opacity="0"/>
+    </radialGradient>
+  </defs>
+
+  <!-- Background -->
+  <circle cx="256" cy="256" r="256" fill="url(#bgGradient)"/>
+
+  <!-- Glass Orb (Glassmorphism) -->
+  <circle cx="256" cy="236" r="156" fill="rgba(255, 255, 255, 0.12)" stroke="rgba(255, 255, 255, 0.3)" stroke-width="2"/>
+  <circle cx="256" cy="236" r="156" fill="url(#glow)" opacity="0.4"/>
+
+  <!-- Inner Crystal Reflection -->
+  <ellipse cx="256" cy="196" rx="80" ry="20" fill="rgba(255, 255, 255, 0.25)" opacity="0.6"/>
+
+  <!-- Trophy (Golden, 3D) -->
+  <g transform="translate(256, 236) scale(0.9) translate(-256, -236)">
+    <!-- Base -->
+    <path d="M236 296H276C282 296 286 292 286 286V276H226V286C226 292 230 296 236 296Z" fill="#f59e0b"/>
+    <path d="M236 276H276V286H236V276Z" fill="#fbbf24"/>
+
+    <!-- Cup -->
+    <path d="M216 236H296C306 236 312 230 312 220V200C312 190 306 184 296 184H216C206 184 200 190 200 200V220C200 230 206 236 216 236Z" fill="#fbbf24"/>
+    <path d="M216 236H296V246H216V236Z" fill="#f59e0b"/>
+
+    <!-- Handles -->
+    <path d="M196 216C196 206 204 196 216 196C204 196 196 186 196 176" stroke="#fbbf24" stroke-width="16" stroke-linecap="round"/>
+    <path d="M316 216C316 206 308 196 296 196C308 196 316 186 316 176" stroke="#fbbf24" stroke-width="16" stroke-linecap="round"/>
+
+    <!-- Top Star Spark -->
+    <g transform="translate(256, 156)">
+      <path d="M0 0L4 10L14 4L8 14L0 10L-8 14L-14 4L-4 10Z" fill="#fff" opacity="0.9">
+        <animate attributeName="opacity" values="0.9;1;0.9" dur="2s" repeatCount="indefinite"/>
+      </path>
+    </g>
+  </g>
+
+  <!-- Subtle Sparkles -->
+  <circle cx="180" cy="160" r="4" fill="#fff" opacity="0.6">
+    <animate attributeName="opacity" values="0.6;1;0.6" dur="1.5s" repeatCount="indefinite"/>
+  </circle>
+  <circle cx="340" cy="180" r="3" fill="#fff" opacity="0.5">
+    <animate attributeName="opacity" values="0.5;0.9;0.5" dur="2s" repeatCount="indefinite"/>
+  </circle>
+</svg>
