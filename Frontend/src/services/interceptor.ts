@@ -72,11 +72,12 @@ const setupInterceptors = (api: AxiosInstance, dispatch: AppDispatch) => {
       }
 
       const { status, data } = error.response;
+      const errorData = data as { error?: string };
       if (
         (status === 401 &&
-          (data?.error === "User is Blocked" ||
-            data?.error === "Invalid token ")) ||
-        (status === 403 && data?.error === "Unauthorized")
+          (errorData?.error === "User is Blocked" ||
+            errorData?.error === "Invalid token")) ||
+        (status === 403 && errorData?.error === "Unauthorized")
       ) {
         console.log(
           `Authentication error on ${frontendUrl}, redirecting to /auth?path=login&from=${encodeURIComponent(frontendUrl)}`
@@ -144,10 +145,10 @@ const setupInterceptors = (api: AxiosInstance, dispatch: AppDispatch) => {
           
           // Retry the original request
           return api(originalRequest);
-        } catch (refreshError: any) {
+        } catch (refreshError: unknown) {
           console.error(
             `Token refresh failed on ${frontendUrl}:`,
-            refreshError.message || refreshError
+            (refreshError as Error).message || refreshError
           );
           
           // Clear token storage and redirect to login

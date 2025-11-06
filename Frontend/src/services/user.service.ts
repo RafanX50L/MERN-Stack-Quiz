@@ -30,10 +30,10 @@ export type PaginatedQuizzes = {
 export const UserService = {
   getDashboard: async (userId: string): Promise<UserDashboardData | null> => {
     try {
-      const res = await api.get<UserDashboardData>(USER_ROUTES.DASHBOARD(userId))
+      const res = await api.get<{ data: UserDashboardData }>(USER_ROUTES.DASHBOARD(userId))
       return res.data.data
-    } catch (error: any) {
-      const msg = error.response?.data?.error || 'Failed to load dashboard'
+    } catch (error: unknown) {
+      const msg = error instanceof Error ? error.message : 'Failed to load dashboard'
       toast.error(msg)
       return null
     }
@@ -54,20 +54,22 @@ export const UserService = {
         if (filters?.page) params.append('page', filters.page.toString())
         if (filters?.limit) params.append('limit', filters.limit.toString())
 
-        const res = await api.get<PaginatedQuizzes>(`${USER_ROUTES.USER_QUIZ_ROUTES.GET_ALL}?${params}`)
+        const res = await api.get<{ data: PaginatedQuizzes }>(`${USER_ROUTES.USER_QUIZ_ROUTES.GET_ALL}?${params}`)
         return res.data.data
-      } catch (error) {
-        toast.error('Failed to load quizzes')
+      } catch (error: unknown) {
+        const errorMessage = error instanceof Error ? error.message : 'Unknown error occurred';
+        toast.error(`Failed to load quizzes : ${errorMessage}`)
         return null
       }
     },
 
     getById: async (id: string): Promise<QuizDetail | null> => {
       try {
-        const res = await api.get<QuizDetail>(USER_ROUTES.USER_QUIZ_ROUTES.GET_BY_ID(id))
+        const res = await api.get<{ data: QuizDetail }>(USER_ROUTES.USER_QUIZ_ROUTES.GET_BY_ID(id))
         return res.data.data
-      } catch (error: any) {
-        toast.error('Quiz not found')
+      } catch (error: unknown) {
+        const errorMessage = error instanceof Error ? error.message : 'Unknown error occurred';
+        toast.error(`Quiz not found : ${errorMessage}`)
         return null
       }
     },
@@ -79,10 +81,11 @@ export const UserService = {
       timeTaken: number
     }): Promise<SubmitResult | null> => {
       try {
-        const res = await api.post<SubmitResult>(USER_ROUTES.USER_QUIZ_ROUTES.SUBMIT, data)
+        const res = await api.post<{ data: SubmitResult }>(USER_ROUTES.USER_QUIZ_ROUTES.SUBMIT, data)
         return res.data.data
-      } catch (error: any) {
-        toast.error('Failed to submit quiz')
+      } catch (error: unknown) {
+        const errorMessage = error instanceof Error ? error.message : 'Unknown error occurred';
+        toast.error(`Failed to submit quiz : ${errorMessage}`)
         return null
       }
     }

@@ -44,10 +44,10 @@ export type PaginatedUsers = {
 export const AdminService = {
   getDashboard: async (): Promise<AdminDashboardData | null> => {
     try {
-      const res = await api.get<AdminDashboardData>(ADMIN_ROUTES.DASHBOARD)
+      const res = await api.get<{ data: AdminDashboardData}>(ADMIN_ROUTES.DASHBOARD)
       return res.data.data
-    } catch (error: any) {
-      const msg = error.response?.data?.error || 'Failed to load admin dashboard'
+    } catch (error: unknown) {
+      const msg = error instanceof Error ? error.message : 'Failed to load admin dashboard'
       toast.error(msg)
       return null
     }
@@ -68,10 +68,11 @@ export const AdminService = {
         if (params?.page) searchParams.append('page', params.page.toString())
         if (params?.limit) searchParams.append('limit', params.limit.toString())
 
-        const res = await api.get<PaginatedQuizzes>(`${ADMIN_ROUTES.ADMIN_QUIZ_ROUTES.GET_ALL}?${searchParams}`)
+        const res = await api.get<{ data: PaginatedQuizzes }>(`${ADMIN_ROUTES.ADMIN_QUIZ_ROUTES.GET_ALL}?${searchParams}`)
         return res.data.data
-      } catch (error: any) {
-        toast.error('Failed to load quizzes')
+      } catch (error: unknown) {
+        const errorMessage = error instanceof Error ? error.message : 'Unknown error occurred';
+        toast.error(`Failed to load quizzes : ${errorMessage}`)
         return null
       }
     },
@@ -81,8 +82,9 @@ export const AdminService = {
         const res = await api.post(ADMIN_ROUTES.ADMIN_QUIZ_ROUTES.CREATE, data)
         toast.success('Quiz created!')
         return res.data.data
-      } catch (error: any) {
-        toast.error(error.response?.data?.error || 'Failed to create quiz')
+      } catch (error: unknown) {
+        const errorMessage = error instanceof Error ? error.message : 'Unknown error occurred';
+        toast.error(`Failed to create quiz : ${errorMessage}`)
         throw error
       }
     },
@@ -92,8 +94,9 @@ export const AdminService = {
         const res = await api.put(ADMIN_ROUTES.ADMIN_QUIZ_ROUTES.UPDATE(id), data)
         toast.success('Quiz updated!')
         return res.data.data
-      } catch (error: any) {
-        toast.error(error.response?.data?.error || 'Failed to update')
+      } catch (error: unknown) {
+        const errorMessage = error instanceof Error ? error.message : 'Unknown error occurred';
+        toast.error(`Failed to update quiz : ${errorMessage}`)
         throw error
       }
     },
@@ -102,7 +105,7 @@ export const AdminService = {
       try {
         await api.delete(ADMIN_ROUTES.ADMIN_QUIZ_ROUTES.DELETE(id))
         toast.success('Quiz deleted!')
-      } catch (error: any) {
+      } catch (error) {
         toast.error('Failed to delete')
         throw error
       }
@@ -112,7 +115,7 @@ export const AdminService = {
       try {
         await api.post(ADMIN_ROUTES.ADMIN_QUIZ_ROUTES.BULK_DELETE, { ids })
         toast.success(`${ids.length} quizzes deleted`)
-      } catch (error: any) {
+      } catch (error) {
         toast.error('Bulk delete failed')
         throw error
       }
@@ -134,11 +137,11 @@ export const AdminService = {
         if (params?.page) searchParams.append('page', params.page.toString())
         if (params?.limit) searchParams.append('limit', params.limit.toString())
 
-        const res = await api.get<PaginatedUsers>(`${ADMIN_ROUTES.ADMIN_USER_ROUTES.GET_ALL}?${searchParams}`)
+        const res = await api.get<{ data: PaginatedUsers}>(`${ADMIN_ROUTES.ADMIN_USER_ROUTES.GET_ALL}?${searchParams}`)
         return res.data.data
-      } catch (error: any) {
+      } catch (error) {
         toast.error('Failed to load users')
-        return null
+        throw error;
       }
     },
 
@@ -146,7 +149,7 @@ export const AdminService = {
       try {
         await api.patch(ADMIN_ROUTES.ADMIN_USER_ROUTES.TOGGLE_BLOCK(id), { isBlocked })
         toast.success(isBlocked ? 'User blocked' : 'User unblocked')
-      } catch (error: any) {
+      } catch (error) {
         toast.error('Failed to update status')
         throw error
       }
@@ -156,7 +159,7 @@ export const AdminService = {
       try {
         await api.post(ADMIN_ROUTES.ADMIN_USER_ROUTES.BULK_BLOCK, { ids, isBlocked })
         toast.success(`${ids.length} users ${isBlocked ? 'blocked' : 'unblocked'}`)
-      } catch (error: any) {
+      } catch (error) {
         toast.error('Bulk action failed')
         throw error
       }
