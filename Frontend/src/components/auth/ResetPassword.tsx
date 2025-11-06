@@ -1,6 +1,6 @@
 import { Button } from "@/components/ui/button";
 import { useState, useEffect } from "react";
-import logo from "@/assets/react.svg";
+import logo from "@/assets/images/logo.svg";
 import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { z } from "zod";
@@ -76,8 +76,8 @@ export function ResetPasswordPage() {
       <div className="bg-gray-800 rounded-lg shadow-lg p-8 w-full max-w-md">
         {/* Logo Section */}
         <div className="flex items-center justify-center mb-6">
-          <img src={logo} className="w-20 h-20" alt="Tahtib ALJuhd logo" />
-          <h1 className="text-2xl font-bold text-white">Tahtib ALJuhd</h1>
+          <img src={logo} className="w-20 h-20" alt="Quiz Master Pro logo" />
+          <h1 className="text-2xl font-bold text-white">Quiz Master Pro</h1>
         </div>
 
         {/* Reset Password Form */}

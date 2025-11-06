@@ -8,7 +8,7 @@ import {
   FormLabel,
   FormMessage,
 } from "@/components/ui/form";
-import logo from "@/assets/react.svg";
+import logo from "@/assets/images/logo.svg";
 import { Link, useNavigate } from "react-router-dom";
 import { useEffect, useState } from "react";
 import { loginSchema } from "@/schemas/authSchema";
@@ -88,9 +88,9 @@ export default function LoginPage() {
     <div className="min-h-screen bg-gray-900 flex items-center justify-center p-4">
       <div className="bg-gray-800 rounded-lg shadow-lg p-8 w-full max-w-md">
         <div className="flex items-center justify-center mb-6">
-          <img src={logo} className="w-20 h-20 mr-2" alt="Tahtib AlJuhd logo" />
+          <img src={logo} className="w-20 h-20 mr-2" alt="Quiz Master Pro logo" />
           <div>
-            <h1 className="text-2xl font-bold text-white">Tahtib AlJuhd</h1>
+            <h1 className="text-2xl font-bold text-white">Quiz Master Pro</h1>
             <p className="text-sm text-gray-400">Login Page</p>
           </div>
         </div>

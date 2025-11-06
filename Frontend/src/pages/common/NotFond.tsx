@@ -1,342 +1,140 @@
-import React, { useState, useEffect } from "react";
-import { Button } from "@/components/ui/button";
-import { useNavigate } from "react-router-dom";
+'use client'
 
-interface MousePosition {
-  x: number;
-  y: number;
-}
+import { Button } from '@/components/ui/button'
+import { Card } from '@/components/ui/card'
+import { Badge } from '@/components/ui/badge'
+import { 
+  ArrowLeft, 
+  Home, 
+  Search, 
+  Zap, 
+  BookOpen,
+  AlertCircle
+} from 'lucide-react'
+import { useNavigate } from 'react-router-dom'
 
-interface Ripple {
-  id: number;
-  x: number;
-  y: number;
-  size: number;
-}
-
-const NotFoundPage: React.FC = () => {
-  const [mousePosition, setMousePosition] = useState<MousePosition>({
-    x: 0,
-    y: 0,
-  });
-  const [ripples, setRipples] = useState<Ripple[]>([]);
-  const navigate = useNavigate();
-
-  useEffect(() => {
-    const handleMouseMove = (e: MouseEvent) => {
-      setMousePosition({
-        x: e.clientX / window.innerWidth,
-        y: e.clientY / window.innerHeight,
-      });
-    };
-
-    window.addEventListener("mousemove", handleMouseMove);
-    return () => window.removeEventListener("mousemove", handleMouseMove);
-  }, []);
-
-  const createRipple = (e: React.MouseEvent<HTMLButtonElement>) => {
-    const button = e.currentTarget;
-    const rect = button.getBoundingClientRect();
-    const size = Math.max(rect.width, rect.height);
-    const x = e.clientX - rect.left - size / 2;
-    const y = e.clientY - rect.top - size / 2;
-
-    const newRipple: Ripple = {
-      id: Date.now(),
-      x,
-      y,
-      size,
-    };
-
-    setRipples((prev) => [...prev, newRipple]);
-
-    setTimeout(() => {
-      setRipples((prev) => prev.filter((ripple) => ripple.id !== newRipple.id));
-    }, 600);
-  };
-
-  interface FloatingElementProps {
-    children: React.ReactNode;
-    index: number;
-    className?: string;
-    style?: React.CSSProperties;
-  }
-
-  const FloatingElement: React.FC<FloatingElementProps> = ({
-    children,
-    index,
-    className = "",
-    style,
-  }) => {
-    const speed = (index + 1) * 0.02;
-    const xPos = (mousePosition.x - 0.5) * 100 * speed;
-    const yPos = (mousePosition.y - 0.5) * 100 * speed;
-
-    return (
-      <div
-        className={`absolute opacity-50 text-4xl transition-transform duration-300 ease-out ${className}`}
-        style={{
-          transform: `translate(${xPos}px, ${yPos}px)`,
-          animation: "float 6s ease-in-out infinite",
-          ...style,
-        }}
-      >
-        {children}
-      </div>
-    );
-  };
-
-  interface AnimatedButtonProps {
-    variant?:
-      | "default"
-      | "link"
-      | "destructive"
-      | "outline"
-      | "secondary"
-      | "ghost"
-      | null;
-    children: React.ReactNode;
-    onClick?: (e: React.MouseEvent<HTMLButtonElement>) => void;
-    className?: string;
-  }
-
-  const AnimatedButton: React.FC<AnimatedButtonProps> = ({
-    variant,
-    children,
-    onClick,
-    className = "",
-  }) => {
-    return (
-      <Button
-        variant={variant}
-        onClick={(e) => {
-          createRipple(e);
-          if (onClick) onClick(e);
-        }}
-        className={`relative overflow-hidden transition-all duration-300 hover:-translate-y-1 hover:shadow-lg ${className}`}
-      >
-        {children}
-        {ripples.map((ripple) => (
-          <span
-            key={ripple.id}
-            className="absolute rounded-full bg-white/30 pointer-events-none"
-            style={{
-              left: ripple.x,
-              top: ripple.y,
-              width: ripple.size,
-              height: ripple.size,
-              animation: "ripple 0.6s linear forwards",
-            }}
-          />
-        ))}
-      </Button>
-    );
-  };
+export default function NotFound() {
+  const navigate = useNavigate()
 
   return (
-    <div className="min-h-screen bg-gradient-to-br from-indigo-500 via-purple-600 to-purple-800 flex items-center justify-center overflow-hidden relative">
-      {/* Floating Elements */}
-      <div className="absolute inset-0 pointer-events-none">
-        <FloatingElement
-          index={0}
-          className="top-1/5 left-1/12"
-          style={{ animationDelay: "0s" }}
-        >
-          💪
-        </FloatingElement>
-        <FloatingElement
-          index={1}
-          className="top-3/5 right-1/5"
-          style={{ animationDelay: "2s" }}
-        >
-          🏃‍♂️
-        </FloatingElement>
-        <FloatingElement
-          index={2}
-          className="bottom-1/3 left-1/5"
-          style={{ animationDelay: "4s" }}
-        >
-          🏋️‍♀️
-        </FloatingElement>
-        <FloatingElement
-          index={3}
-          className="top-1/4 right-1/4"
-          style={{ animationDelay: "1s" }}
-        >
-          🧘‍♀️
-        </FloatingElement>
-        <FloatingElement
-          index={4}
-          className="bottom-1/5 left-1/3"
-          style={{ animationDelay: "3s" }}
-        >
-          🚴‍♂️
-        </FloatingElement>
-        <FloatingElement
-          index={5}
-          className="top-2/5 right-1/6"
-          style={{ animationDelay: "5s" }}
-        >
-          🏊‍♀️
-        </FloatingElement>
-      </div>
+    <>
+      {/* Full-screen gradient background */}
+      <div className="min-h-screen bg-linear-to-br from-blue-50 via-indigo-50 to-purple-50 flex items-center justify-center p-4 overflow-hidden">
+        
+        {/* Subtle grid pattern */}
+        <div className="absolute inset-0 bg-grid-slate-100 mask-[radial-gradient(ellipse_at_center,transparent_20%,black)]" />
 
-      <div className="text-center p-8 max-w-2xl w-full relative z-10">
-        {/* Logo */}
-        <div className="text-4xl md:text-5xl font-bold text-white mb-8 drop-shadow-lg animate-fade-in-down">
-          Tahtib AlJuhd
-        </div>
-
-        {/* Fitness Icon */}
-        <div className="w-20 h-20 mx-auto mb-8 bg-white/20 rounded-full flex items-center justify-center animate-pulse-slow">
-          <div className="relative w-12 h-5 bg-white rounded-full animate-spin-slow">
-            <div className="absolute -left-1 -top-1 w-4 h-7 bg-white rounded-sm"></div>
-            <div className="absolute -right-1 -top-1 w-4 h-7 bg-white rounded-sm"></div>
+        <div className="relative z-10 max-w-4xl w-full text-center">
+          
+          {/* 404 Large Text with Gradient */}
+          <div className="mb-8">
+            <h1 className="text-9xl md:text-[12rem] font-bold tracking-tighter bg-linear-to-r from-blue-600 via-purple-600 to-pink-600 bg-clip-text text-transparent animate-pulse">
+              404
+            </h1>
           </div>
-        </div>
 
-        {/* Error Code */}
-        <div className="text-8xl md:text-9xl font-black text-white/90 mb-4 drop-shadow-2xl animate-bounce-in leading-none">
-          404
-        </div>
+          {/* Main Message */}
+          <div className="mb-6">
+            <Badge variant="secondary" className="mb-4">
+              <AlertCircle className="h-3 w-3 mr-1" />
+              Page Not Found
+            </Badge>
+            <h2 className="text-3xl md:text-4xl font-bold text-gray-900 mb-3">
+              Oops! Looks like this quiz doesn't exist.
+            </h2>
+            <p className="text-lg text-gray-600 max-w-2xl mx-auto">
+              The page you're looking for might have been moved, deleted, or is temporarily unavailable.
+            </p>
+          </div>
 
-        {/* Error Message */}
-        <h1 className="text-2xl md:text-3xl text-white mb-4 animate-fade-in-up font-semibold">
-          Page Not Found
-        </h1>
+          {/* Fun Illustration Card */}
+          <Card className="mx-auto max-w-md mb-10 overflow-hidden shadow-xl">
+            <div className="bg-linear-to-br from-blue-500 to-purple-600 p-8 relative">
+              <div className="absolute inset-0 opacity-20">
+                <div className="absolute top-4 left-4 w-16 h-16 bg-white rounded-full animate-bounce" />
+                <div className="absolute bottom-6 right-6 w-12 h-12 bg-white rounded-full animate-bounce delay-300" />
+                <div className="absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 w-20 h-20 bg-white rounded-full animate-ping" />
+              </div>
+              <div className="relative z-10 text-white text-center">
+                <Search className="h-16 w-16 mx-auto mb-3" />
+                <p className="text-sm font-medium">Searching the entire codebase...</p>
+              </div>
+            </div>
+          </Card>
 
-        {/* Error Description */}
-        <p className="text-lg md:text-xl text-white/80 mb-10 leading-relaxed animate-fade-in-up-delayed max-w-lg mx-auto">
-          {/* eslint-disable-next-line */}
-          Looks like this page took a rest day! The page you're looking for
-          might have been moved, deleted, or is taking a break from its workout
-          routine.
-        </p>
+          {/* Action Buttons */}
+          <div className="flex flex-col sm:flex-row gap-4 justify-center mb-12">
+            <Button 
+              size="lg" 
+              className="gap-2 text-lg px-8 bg-linear-to-r from-blue-600 to-purple-600 hover:from-blue-700 hover:to-purple-700"
+              onClick={() => navigate('/')}
+            >
+              <Home className="h-5 w-5" />
+              Back to Home
+            </Button>
+            <Button 
+              size="lg" 
+              variant="outline" 
+              className="text-lg px-8 border-2"
+              onClick={() => navigate(-1)}
+            >
+              <ArrowLeft className="h-5 w-5 mr-2" />
+              Go Back
+            </Button>
+          </div>
 
-        {/* Buttons */}
-        <div className="flex flex-col sm:flex-row gap-4 justify-center items-center animate-fade-in-up-delayed-2">
-          <AnimatedButton
-            variant="secondary"
-            onClick={() => navigate("/")}
-            className="bg-white text-indigo-600 hover:bg-white/10 hover:border-white hover:text-white font-semibold px-8 py-3 rounded-full min-w-[200px]"
-          >
-            Back to Home
-          </AnimatedButton>
-          <AnimatedButton
-            variant="secondary"
-            onClick={() => navigate("/dashboard")}
-            className="bg-white text-indigo-600 hover:bg-white/10 hover:border-white hover:text-white font-semibold px-8 py-3 rounded-full min-w-[200px]"
-          >
-            Back to Dashboard
-          </AnimatedButton>
+          {/* Quick Links */}
+          <div className="bg-white/80 backdrop-blur-sm rounded-2xl p-8 shadow-lg border border-gray-200">
+            <h3 className="text-xl font-semibold text-gray-900 mb-6 flex items-center justify-center gap-2">
+              <Zap className="h-5 w-5 text-yellow-500" />
+              Explore Popular Sections
+            </h3>
+            <div className="grid grid-cols-1 sm:grid-cols-3 gap-4 text-left">
+              <a 
+                href="/quizzes/javascript" 
+                className="flex items-center gap-3 p-4 rounded-lg hover:bg-gray-50 transition-colors group"
+              >
+                <div className="w-10 h-10 bg-blue-100 rounded-lg flex items-center justify-center group-hover:scale-110 transition-transform">
+                  <BookOpen className="h-5 w-5 text-blue-600" />
+                </div>
+                <div>
+                  <p className="font-medium text-gray-900">JavaScript</p>
+                  <p className="text-sm text-gray-500">200+ quizzes</p>
+                </div>
+              </a>
+              <a 
+                href="/quizzes/react" 
+                className="flex items-center gap-3 p-4 rounded-lg hover:bg-gray-50 transition-colors group"
+              >
+                <div className="w-10 h-10 bg-purple-100 rounded-lg flex items-center justify-center group-hover:scale-110 transition-transform">
+                  <div className="text-purple-600 font-bold text-xs">JSX</div>
+                </div>
+                <div>
+                  <p className="font-medium text-gray-900">React</p>
+                  <p className="text-sm text-gray-500">150+ quizzes</p>
+                </div>
+              </a>
+              <a 
+                href="/leaderboard" 
+                className="flex items-center gap-3 p-4 rounded-lg hover:bg-gray-50 transition-colors group"
+              >
+                <div className="w-10 h-10 bg-yellow-100 rounded-lg flex items-center justify-center group-hover:scale-110 transition-transform">
+                  <div className="h-5 w-5 text-yellow-600" />
+                </div>
+                <div>
+                  <p className="font-medium text-gray-900">Leaderboard</p>
+                  <p className="text-sm text-gray-500">Top 100 coders</p>
+                </div>
+              </a>
+            </div>
+          </div>
+
+          {/* Footer Note */}
+          <p className="mt-12 text-sm text-gray-500">
+            Still lost? <a href="mailto:support@quizmaster.pro" className="text-blue-600 hover:underline">Contact support</a>
+          </p>
         </div>
       </div>
-
-      <style>{`
-        @keyframes fade-in-down {
-          from {
-            opacity: 0;
-            transform: translateY(-50px);
-          }
-          to {
-            opacity: 1;
-            transform: translateY(0);
-          }
-        }
-
-        @keyframes fade-in-up {
-          from {
-            opacity: 0;
-            transform: translateY(50px);
-          }
-          to {
-            opacity: 1;
-            transform: translateY(0);
-          }
-        }
-
-        @keyframes bounce-in {
-          0% {
-            opacity: 0;
-            transform: scale(0.3);
-          }
-          50% {
-            opacity: 1;
-            transform: scale(1.05);
-          }
-          70% {
-            transform: scale(0.9);
-          }
-          100% {
-            opacity: 1;
-            transform: scale(1);
-          }
-        }
-
-        @keyframes pulse-slow {
-          0%, 100% {
-            transform: scale(1);
-          }
-          50% {
-            transform: scale(1.1);
-          }
-        }
-
-        @keyframes spin-slow {
-          from {
-            transform: rotate(0deg);
-          }
-          to {
-            transform: rotate(360deg);
-          }
-        }
-
-        @keyframes float {
-          0%, 100% {
-            transform: translateY(0px);
-          }
-          50% {
-            transform: translateY(-20px);
-          }
-        }
-
-        @keyframes ripple {
-          to {
-            transform: scale(4);
-            opacity: 0;
-          }
-        }
-
-        .animate-fade-in-down {
-          animation: fade-in-down 1s ease-out;
-        }
-
-        .animate-fade-in-up {
-          animation: fade-in-up 1s ease-out 0.3s both;
-        }
-
-        .animate-fade-in-up-delayed {
-          animation: fade-in-up 1s ease-out 0.6s both;
-        }
-
-        .animate-fade-in-up-delayed-2 {
-          animation: fade-in-up 1s ease-out 0.9s both;
-        }
-
-        .animate-bounce-in {
-          animation: bounce-in 1.2s ease-out;
-        }
-
-        .animate-pulse-slow {
-          animation: pulse-slow 2s infinite;
-        }
-
-        .animate-spin-slow {
-          animation: spin-slow 3s linear infinite;
-        }
-      `}</style>
-    </div>
-  );
-};
-
-export default NotFoundPage;
+    </>
+  )
+}

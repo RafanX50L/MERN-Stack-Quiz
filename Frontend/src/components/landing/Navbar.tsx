@@ -1,6 +1,6 @@
 import { Link, useNavigate } from "react-router-dom";
 import { Button } from "../ui/button";
-import logo from "@/assets/react.svg";
+import logo from "@/assets/images/logo.svg";
 import { secureTokenStorage } from "@/services/api";
 
 export default function Navbar() {
@@ -14,11 +14,11 @@ export default function Navbar() {
           <div className="flex items-center">
             <img
               src={logo}
-              alt="Tahtib AlJuhd Logo"
+              alt="Quiz Master Pro Logo"
               className="w-16 h-16 mr-3 rounded-lg bg-indigo-500 p-1 shadow-lg shadow-indigo-500/50"
             />
             <h1 className="text-2xl font-semibold text-slate-100">
-              Tahtib AlJuhd
+              Quiz Master Pro
             </h1>
           </div>
 
@@ -53,7 +53,7 @@ export default function Navbar() {
           <div className="flex gap-4 flex-wrap">
             {token ? (
               <Button
-                onClick={() => navigate("/dashboard")}
+                onClick={() => navigate("/user/dashboard")}
                 className="bg-blue-600 hover:bg-blue-900 text-white px-5 py-2 rounded-md shadow-md transition duration-200"
               >
                 Continue Browsing

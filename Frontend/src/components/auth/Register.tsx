@@ -2,7 +2,7 @@ import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { useState, useEffect } from "react";
-import logo from "@/assets/react.svg";
+import logo from "@/assets/images/logo.svg";
 import { AuthService } from "@/services/authService";
 import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
@@ -88,7 +88,7 @@ export function RegisterPage() {
         {/* Logo Section */}
         <div className="flex items-center justify-center mb-6">
           <img src={logo} className="w-20 h-20" alt="logo image" />
-          <h1 className="text-2xl font-bold text-white">Tahtib ALJuhd</h1>
+          <h1 className="text-2xl font-bold text-white">Quiz Master Pro</h1>
         </div>
 
         <form onSubmit={handleSubmit(onSubmit)} className="space-y-4">

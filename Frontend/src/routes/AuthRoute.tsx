@@ -9,7 +9,7 @@ export const AuthRoute: React.FC = () => {
 
   // Extract 'from' parameter from URL query
   const params = new URLSearchParams(location.search);
-  const from = params.get('from') || (user?.role === 'admin' ? '/admin/dashboard' : '/dashboard');
+  const from = params.get('from') || (user?.role === 'admin' ? '/admin/dashboard' : '/user/dashboard');
 
   if (isAuthenticated) {
     console.log(`Authenticated user, redirecting to ${from}`);

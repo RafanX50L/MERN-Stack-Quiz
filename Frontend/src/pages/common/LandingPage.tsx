@@ -98,7 +98,7 @@ export default function Landing() {
                 <Button 
                   size="lg" 
                   className="gap-2 text-lg px-8"
-                  onClick={() => navigate('/login')}
+                  onClick={() => navigate('/auth?path=login')}
                 >
                   Start Learning Free
                   <ArrowRight className="h-5 w-5" />
