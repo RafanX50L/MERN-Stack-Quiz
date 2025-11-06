@@ -28,11 +28,16 @@ export default function QuizForm({ open, onClose, onSubmit, initialData }: Props
   const [category, setCategory] = useState(initialData?.category || '')
   const [difficulty, setDifficulty] = useState(initialData?.difficulty || 'Beginner')
   const [timeLimit, setTimeLimit] = useState(initialData?.timeLimit || 300)
-  const [questions, setQuestions] = useState<Question[]>(
-    (initialData?.questions) || [{ question: '', options: ['', '', '', ''], correctAnswer: 0 }]
-  )
+  const [questions, setQuestions] = useState<Question[]>([
+    { question: '', options: ['', '', '', ''], correctAnswer: 0 }
+  ])
 
-  useEffect(()=>console.log(initialData,questions))
+  useEffect(() => {
+    if (initialData?.questions?.length) {
+      setQuestions(initialData.questions)
+    }
+  }, [initialData])
+
 
   const handleAddQuestion = () => {
     setQuestions([...questions, { question: '', options: ['', '', '', ''], correctAnswer: 0 }])
@@ -60,7 +65,7 @@ export default function QuizForm({ open, onClose, onSubmit, initialData }: Props
 
   return (
     <Dialog open={open} onOpenChange={onClose}>
-      <DialogContent className="max-w-3xl max-h-[80vh] overflow-y-auto">
+      <DialogContent className="max-w-3xl max-h-[80vh] overflow-y-auto bg-card border border-border shadow-lg bg-black  text-white bord">
         <DialogHeader>
           <DialogTitle>{initialData ? 'Edit' : 'Create'} Quiz</DialogTitle>
         </DialogHeader>

@@ -9,7 +9,7 @@ async function connectRedis() {
     redisClient = createClient({
       url: env.REDIS_URL,
       socket: {
-        tls: true, // ✅ required for Upstash , comment it for local Redis servers
+        // tls: true, // ✅ required for Upstash , comment it for local Redis servers
         reconnectStrategy: (retries) => {
           if (retries > 5) {
             return new Error("Max retries reached. Exiting...");
