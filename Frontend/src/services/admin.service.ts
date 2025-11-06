@@ -3,7 +3,6 @@ import { ADMIN_ROUTES } from '@/constants/routes'
 import { toast } from 'sonner'
 import api from './api'
 import type { UserInterface } from '@/types/user'
-import type { QuizSummary } from '@/types/quiz'
 
 export type AdminDashboardData = {
   stats: {

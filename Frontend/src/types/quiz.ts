@@ -6,6 +6,7 @@ export type QuizSummary = {
   difficulty: string
   timeLimit: number
   questions: QuizDetail['questions'];
+  questionCount: number
 };
 
 export type QuizDetail = {

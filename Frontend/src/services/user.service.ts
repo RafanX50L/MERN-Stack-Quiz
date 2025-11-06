@@ -2,8 +2,7 @@
 import { toast } from 'sonner'
 import api from './api'
 import { USER_ROUTES } from '@/constants/routes'
-import type { QuizDetail, SubmitResult } from '@/types/quiz'
-import type { PaginatedQuizzes } from './admin.service'
+import type { QuizDetail, QuizSummary, SubmitResult } from '@/types/quiz'
 
 export type UserDashboardData = {
   stats: {
@@ -24,7 +23,10 @@ export type UserDashboardData = {
     categoryPerformance: Array<{ category: string; attempts: number; avgScore: number }>
   }
 }
-
+export type PaginatedQuizzes = {
+  quizzes: QuizSummary[]
+  pagination: { page: number; limit: number; total: number }
+}
 export const UserService = {
   getDashboard: async (userId: string): Promise<UserDashboardData | null> => {
     try {
