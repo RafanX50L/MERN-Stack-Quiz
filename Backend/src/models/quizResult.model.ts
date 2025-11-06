@@ -1,13 +1,15 @@
 import mongoose, { Schema, Document } from 'mongoose'
+import { IQuiz } from './quiz.model'
 
 export interface IQuizResult extends Document {
-  quiz: mongoose.Types.ObjectId 
+  quiz: mongoose.Types.ObjectId | IQuiz
   userId?: string
   score: number
   totalQuestions: number
   timeTaken: number
   answers: number[]
-  submittedAt: Date
+  createdAt: Date
+  updatedAt: Date
 }
 
 const QuizResultSchema = new Schema<IQuizResult>({

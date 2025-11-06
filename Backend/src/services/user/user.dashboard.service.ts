@@ -1,5 +1,6 @@
 import { IQuizResultRepository } from '@/core/interface/repository/IquizResult.respository';
 import { IUserDashboardService } from '@/core/interface/service/user/Iuser.dashboard.service';
+import { IQuiz } from '@/models/quiz.model';
 
 export class UserDashboardService implements IUserDashboardService {
   constructor(private readonly _resultRepo: IQuizResultRepository) {}
@@ -24,8 +25,8 @@ export class UserDashboardService implements IUserDashboardService {
     // ---- Recent Results ----
     const recentResults = results.slice(0, 5).map(r => ({
       quizId: r.quiz._id,
-      title: r.quiz.title,
-      category: r.quiz.category,
+      title: (r.quiz as IQuiz).title,
+      category: (r.quiz as IQuiz).category,
       score: r.score,
       date: r.createdAt.toISOString().split("T")[0],
     }));
